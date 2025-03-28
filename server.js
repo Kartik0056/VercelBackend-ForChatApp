@@ -61,7 +61,9 @@ app.use("/api/auth", authRoutes)
 app.use("/api/users", userRoutes)
 app.use("/api/conversations", conversationRoutes)
 app.use("/api/messages", messageRoutes)
-
+app.get("/", (req, res) => {
+  res.send("Backend is running!");
+});
 // Start server
 const PORT = process.env.PORT || 4000
 server.listen(PORT, () => {
