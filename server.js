@@ -40,7 +40,6 @@ const peerServer = ExpressPeerServer(server, {
 app.use("/peerjs", peerServer)
 
 // Middleware
-app.use(cors())
 app.use(cors({ origin: "*" }));
 app.use(express.json())
 app.use("/uploads", express.static(path.join(__dirname, "uploads")))
