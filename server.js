@@ -43,7 +43,8 @@ app.use("/peerjs", peerServer)
 app.use(cors({
   origin: [
     "http://localhost:3000", 
-    "https://mychatapp-production-38b5.up.railway.app"
+    "https://mychatapp-production-38b5.up.railway.app",
+    "https://vercel-backend-for-chat-app.vercel.app"
   ],
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
