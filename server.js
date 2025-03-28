@@ -50,7 +50,7 @@ if (!fs.existsSync(path.join(__dirname, "uploads"))) {
 }
 
 // Connect to MongoDB
-const mongoURI = process.env.MONGOATLAS;
+const mongoURI = process.env.MONGO_URI;
 mongoose
   .connect(mongoURI)
   .then(() => console.log("Connected to MongoDB Compass"))
