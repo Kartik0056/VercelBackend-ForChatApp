@@ -68,7 +68,7 @@ app.get("/health", (req, res) => {
 
 // Connect to MongoDB
 mongoose
-  .connect(process.env.MONGODB_URI || "mongodb://localhost:27017/chat-app")
+  .connect(process.env.MONGO_URI || "mongodb://localhost:27017/chat-app")
   .then(() => console.log("Connected to MongoDB"))
   .catch((err) => console.error("MongoDB connection error:", err))
 
