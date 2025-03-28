@@ -40,7 +40,14 @@ const peerServer = ExpressPeerServer(server, {
 app.use("/peerjs", peerServer)
 
 // Middleware
-app.use(cors({ origin: "*" }));
+app.use(cors({
+  origin: [
+    "http://localhost:3000", 
+    "https://mychatapp-production-38b5.up.railway.app"
+  ],
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
+}));
 app.use(express.json())
 app.use("/uploads", express.static(path.join(__dirname, "uploads")))
 
