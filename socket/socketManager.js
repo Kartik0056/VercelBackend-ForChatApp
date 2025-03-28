@@ -7,11 +7,15 @@ const onlineUsers = {}
 
 export const initializeSocket = (server) => {
   const io = new Server(server, {
-    cors: {
-      origin: "http://localhost:3000",
-      methods: ["GET", "POST"],
-      credentials: true,
-    },
+     cors: {
+    origin: [
+      "http://localhost:3000",
+      "https://mychatapp-production-38b5.up.railway.app",
+      "https://vercel-backend-for-chat-app.vercel.app"
+    ],
+    methods: ["GET", "POST"],
+    credentials: true,
+  },
   })
 
   // Socket.io authentication middleware
