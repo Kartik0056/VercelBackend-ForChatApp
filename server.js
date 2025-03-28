@@ -41,7 +41,7 @@ app.use("/peerjs", peerServer)
 
 // Middleware
 app.use(cors())
-pp.use(cors({ origin: "*" }));
+app.use(cors({ origin: "*" }));
 app.use(express.json())
 app.use("/uploads", express.static(path.join(__dirname, "uploads")))
 
