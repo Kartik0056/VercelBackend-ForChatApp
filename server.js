@@ -34,7 +34,7 @@ const io = new Server(server, {
     origin: [
       "http://localhost:3000",
       "https://mychatapp-production-38b5.up.railway.app",
-      "https://vercel-backend-for-chat-app.vercel.app"
+      "https://my-chat-app-lac.vercel.app"
     ],
     methods: ["GET", "POST"],
     credentials: true
