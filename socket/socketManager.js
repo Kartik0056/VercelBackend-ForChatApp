@@ -7,22 +7,47 @@ const onlineUsers = {}
 
 export const initializeSocket = (server) => {
   const io = new Server(server, {
-     cors: {
-    origin: [
-      "http://localhost:3000",
-      "https://mychatapp-production-38b5.up.railway.app",
-      "https://vercel-backend-for-chat-app.vercel.app"
-    ],
-    methods: ["GET", "POST"],
-    credentials: true,
-  },
+    cors: {
+      origin: [
+        "http://localhost:3000",
+        "https://mychatapp-production-38b5.up.railway.app",
+        "https://vercel-backend-for-chat-app.vercel.app",
+        // Add any other client domains that might connect
+        "https://vercelbackend-forchatapp-production.up.railway.app",
+      ],
+      methods: ["GET", "POST"],
+      credentials: true,
+      allowedHeaders: ["Authorization", "Content-Type"],
+    },
+    // Configure transport options
+    transports: ["websocket", "polling"],
+    pingTimeout: 30000,
+    pingInterval: 25000,
+    upgradeTimeout: 30000,
+    maxHttpBufferSize: 1e8, // 100MB
   })
 
-  // Socket.io authentication middleware
-  io.use(socketAuth)
+  // Socket.io authentication middleware with error handling
+  io.use(async (socket, next) => {
+    try {
+      await socketAuth(socket, next)
+    } catch (error) {
+      console.error("Socket authentication error:", error)
+      next(new Error("Authentication error"))
+    }
+  })
 
   // Socket.io connection handler
   io.on("connection", (socket) => {
+    console.log(`New socket connection: ${socket.id}`)
+
+    // Make sure user is properly authenticated
+    if (!socket.user || !socket.user._id) {
+      console.error("Socket connected without proper authentication")
+      socket.disconnect()
+      return
+    }
+
     const userId = socket.user._id.toString()
 
     // Update user status to online
@@ -112,6 +137,8 @@ export const initializeSocket = (server) => {
 
     // Handle disconnect
     socket.on("disconnect", async () => {
+      console.log(`Socket disconnected: ${socket.id}`)
+
       if (onlineUsers[userId]) {
         onlineUsers[userId].online = false
         onlineUsers[userId].lastSeen = new Date()

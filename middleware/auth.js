@@ -42,7 +42,8 @@ export const socketAuth = async (socket, next) => {
     socket.user = user
     next()
   } catch (error) {
-    next(new Error("Invalid token"))
+    console.error("Socket authentication error:", error.message)
+    next(new Error("Invalid token or authentication failed"))
   }
 }
 
